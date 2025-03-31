@@ -1,26 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('itemForm');
-    const typeButtons = document.querySelectorAll('.type-btn');
-    let currentType = 'lost';
+    const itemTypeSelect = document.getElementById('itemType');
+    let currentType = '';
 
-    // Handle form type switching
-    typeButtons.forEach(button => {
-        button.onclick = function(e) {
-            e.preventDefault();
-            
-            // Update button states
-            typeButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Update current type
-            currentType = this.dataset.type;
-            
-            // Update form
-            updateFormUI(currentType);
-            updateFormPlaceholders(currentType);
-            
-            return false; // Prevent any default behavior
-        };
+    // Handle type change
+    itemTypeSelect.addEventListener('change', function() {
+        currentType = this.value;
+        updateFormUI(currentType);
+        updateFormPlaceholders(currentType);
     });
 
     function updateFormUI(type) {
@@ -30,9 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (type === 'lost') {
             sectionTitle.textContent = 'Report Lost Item';
             submitButton.textContent = 'Submit Lost Item Report';
-        } else {
+        } else if (type === 'found') {
             sectionTitle.textContent = 'Report Found Item';
             submitButton.textContent = 'Submit Found Item Report';
+        } else {
+            sectionTitle.textContent = 'Report Item';
+            submitButton.textContent = 'Submit Report';
         }
     }
 
